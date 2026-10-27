@@ -1,0 +1,123 @@
+/* A Dungeoncard card: walnut body, metal inner frame by rarity, painting window, a gem for its type,
+   and a parchment text plate. Everything is sized in cqw so a card reads the same at any size. */
+.card {
+  --metal: var(--metal-common);
+  --gem: var(--ruby);
+  container-type: inline-size;
+  position: relative;
+  width: var(--w, 120px);
+  aspect-ratio: 5 / 7;
+  flex: none;
+  cursor: pointer;
+  /* The card's own box can't use cqw (that would measure its parent), so size from --w. */
+  border-radius: calc(var(--w, 120px) * 0.06);
+  background:
+    linear-gradient(160deg, rgba(255, 255, 255, 0.08), rgba(0, 0, 0, 0.3)),
+    repeating-linear-gradient(95deg, rgba(255, 255, 255, 0.02) 0 1px, transparent 1px 4px),
+    var(--walnut-700);
+  box-shadow: 0 0 0 1px #000, 0 6px 16px rgba(0, 0, 0, 0.65);
+  padding: calc(var(--w, 120px) * 0.04);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
+}
+.hand .card { touch-action: none; }   /* drag-to-play in the hand; grids elsewhere still scroll */
+.card[data-rarity="starter"] { --metal: var(--metal-starter); }
+.card[data-rarity="uncommon"] { --metal: var(--metal-uncommon); }
+.card[data-rarity="rare"] { --metal: var(--metal-rare); }
+.card[data-rarity="curse"] { --metal: var(--metal-curse); }
+.card[data-type="skill"] { --gem: var(--sapphire); }
+.card[data-type="power"] { --gem: var(--amethyst); }
+.card[data-type="curse"] { --gem: var(--bone); }
+
+.card .frame {
+  position: relative;
+  height: 100%;
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  border-radius: 4cqw;
+  border: 2.2cqw solid var(--metal);
+  background: #0b0705;
+  box-shadow: inset 0 0 0 0.8cqw rgba(0, 0, 0, 0.6), 0 0 0 0.6cqw rgba(0, 0, 0, 0.7);
+  overflow: hidden;
+}
+.card .name {
+  font: 700 9cqw/1.1 var(--display);
+  letter-spacing: 0.02em;
+  text-align: center;
+  padding: 2.6cqw 3cqw 2.2cqw 13cqw;
+  color: var(--parchment);
+  background: linear-gradient(180deg, #3a2a1c, #1d140d);
+  border-bottom: 0.8cqw solid var(--metal);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  text-shadow: 0 1px 2px #000;
+}
+.card .name.long { font-size: 7.6cqw; padding-top: 3.2cqw; }
+.card .name.longer { font-size: 6.4cqw; padding-top: 3.8cqw; padding-bottom: 2.6cqw; }
+.card.upgraded .name { color: #a8e6a0; }
+.card .art { aspect-ratio: 16 / 10; border-bottom: 0.8cqw solid var(--metal); }
+.card .art img { object-position: 50% 35%; }
+.card .gem {
+  position: absolute; left: 50%; top: calc(18cqw + 54.5cqw); transform: translate(-50%, -50%) rotate(45deg);
+  width: 7cqw; height: 7cqw;
+  background: radial-gradient(circle at 35% 30%, #fff 0 8%, var(--gem) 40%, #000 120%);
+  border: 0.8cqw solid var(--metal);
+  box-shadow: 0 0 4cqw var(--gem);
+  z-index: 2;
+}
+.card .text {
+  margin: 3cqw;
+  padding: 3.5cqw 3cqw;
+  font: 600 12cqw/1.08 var(--body);
+  text-align: center;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+  border-radius: 2cqw;
+}
+.card .text.long { font-size: 10.4cqw; }
+.card .text.longer { font-size: 9cqw; line-height: 1.05; }
+.card .text.longest { font-size: 7.8cqw; line-height: 1.04; }
+.card .text b { font-weight: 700; }
+.card .text .up { color: #2f7a35; font-weight: 700; }
+.card .text .boost { color: #9a2e10; font-weight: 700; }
+.card .cost {
+  position: absolute; left: -2cqw; top: -2cqw; z-index: 3;
+  width: 24cqw; height: 24cqw; border-radius: 50%;
+  display: grid; place-items: center;
+  font: 700 15cqw/1 var(--display);
+  color: #1d0e06;
+  background: radial-gradient(circle at 35% 30%, #ffd9a0, var(--ember) 55%, #7a2e10);
+  border: 1cqw solid #2a1608;
+  box-shadow: 0 1cqw 3cqw rgba(0, 0, 0, 0.7), 0 0 0 0.8cqw var(--metal);
+}
+.card .cost.cheaper { color: #10360f; background: radial-gradient(circle at 35% 30%, #d9ffd0, #6fbf73 55%, #1f5a22); }
+.card[data-type="curse"] .cost { display: none; }
+.card .rune {
+  position: absolute; right: 4cqw; bottom: 4cqw; z-index: 3;
+  width: 11cqw; height: 11cqw; border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #fff 0 10%, var(--rune) 45%, #000 130%);
+  border: 0.8cqw solid var(--gilt-bright);
+  box-shadow: 0 0 4cqw var(--rune);
+}
+.card .type-label {
+  position: absolute; right: 5cqw; top: calc(18cqw + 47cqw); z-index: 2;
+  font: 700 4.6cqw var(--display); letter-spacing: 0.12em; text-transform: uppercase;
+  color: rgba(242, 212, 141, 0.75); text-shadow: 0 1px 2px #000;
+}
+
+/* states */
+.card.unplayable { filter: brightness(0.62) saturate(0.6); }
+.card.selected { transform: translateY(-28%) scale(1.35); z-index: 20 !important; box-shadow: 0 0 0 1px #000, 0 0 0 2px var(--gilt-bright), 0 16px 32px rgba(0, 0, 0, 0.8); }
+.card.dragging { transition: none; z-index: 30 !important; }
+.card.played { animation: card-play 0.35s ease forwards; pointer-events: none; }
+@keyframes card-play { to { transform: translateY(-160%) scale(0.8); opacity: 0; } }
+.card.drawn { animation: card-draw 0.32s ease backwards; }
+@keyframes card-draw { from { transform: translate(-120%, 40%) rotate(-20deg) scale(0.6); opacity: 0; } }
+.card.pickable:hover { transform: translateY(-4px); }
+
+/* a row of cards to choose from (rewards, shop, deck picker) */
+.card-grid { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; }
+.card-grid .card { --w: clamp(104px, 28vw, 150px); }
+.priced { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.price { display: inline-flex; align-items: center; gap: 4px; font: 700 0.9rem var(--display); color: var(--gilt-bright); font-variant-numeric: tabular-nums; }
+.price svg { width: 15px; height: 15px; }
+.price.cant { color: #9b5a5a; }
+.sold { opacity: 0.25; pointer-events: none; filter: grayscale(1); }

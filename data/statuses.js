@@ -1,0 +1,28 @@
+// Statuses on heroes and monsters. "turns" statuses count down at the end of their owner's turn;
+// the rest stay until used up or the fight ends.
+export const STATUSES = {
+  strength: { name: "Strength", good: true, text: "Attacks deal +{n} Base damage." },
+  dexterity: { name: "Dexterity", good: true, text: "Block cards give +{n} Block." },
+  vulnerable: { name: "Vulnerable", turns: true, text: "Takes ×1.5 damage from attacks for {n} turns." },
+  weak: { name: "Weak", turns: true, text: "Deals ×0.75 damage for {n} turns." },
+  frail: { name: "Frail", turns: true, text: "Gains ×0.75 Block for {n} turns." },
+  bleed: { name: "Bleed", text: "Loses {n} HP at the start of its turn, then Bleed drops by 1." },
+  burn: { name: "Burn", text: "Takes {n} damage at the start of its turn, then Burn drops by 1." },
+  plating: { name: "Plating", good: true, text: "Gains {n} Block at the start of each turn." },
+  ritual: { name: "Ritual", good: true, text: "Gains {n} Strength at the start of each turn." },
+  berserk: { name: "Berserk", good: true, text: "Starts each turn with {n} Momentum." },
+  edge: { name: "Edge", good: true, text: "Your next attack gets +{n} Base damage." },
+  thorns: { name: "Thorns", good: true, text: "Attackers take {n} damage." },
+  aura: { name: "Searing Aura", good: true, text: "Applies {n} Burn to ALL enemies at the start of each turn." },
+  lantern: { name: "Lantern", good: true, text: "Draws {n} extra card each turn." },
+  pact: { name: "Dark Pact", good: true, text: "Gains {n} Energy and loses 2 HP at the start of each turn." },
+  fortify: { name: "Fortify", good: true, turns: true, text: "Block won't expire at the start of the next turn." },
+  barricade: { name: "Frost Aegis", good: true, text: "Block never expires at the start of your turn." },
+  advantage: { name: "Advantage", good: true, text: "Your next {n} cards that roll dice roll each die twice and keep the higher." },
+  nat20: { name: "Natural Twenty", good: true, text: "Your next card that rolls dice rolls every die at its highest face." },
+  keen: { name: "Improved Critical", good: true, text: "Your dice also score a Critical on the {n} face(s) just below their highest." },
+  bless: { name: "Divine Favor", good: true, text: "Your attacks roll an extra {n}d4." },
+  courage: { name: "Aura of Courage", good: true, text: "Gains {n} Advantage at the start of each turn." },
+  spirit: { name: "Spiritual Weapon", good: true, text: "At the start of each turn, a spectral blade deals {n}d8 damage to a random enemy." },
+  shadows: { name: "Shadows", good: true, text: "Your first {n} extra attack each turn also gets Ambush." },
+};
